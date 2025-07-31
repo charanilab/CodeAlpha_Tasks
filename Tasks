@@ -1,73 +1,457 @@
 
----
+TASK 1: Flashcard Quiz App 
+📁 index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flashcard Quiz App</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Flashcard Quiz</h1>
+    <div class="card">
+      <div id="flashcard-question"></div>
+      <div id="flashcard-answer" class="hidden"></div>
+    </div>
+    <div class="buttons">
+      <button onclick="showAnswer()">Show Answer</button>
+      <button onclick="prevCard()">Previous</button>
+      <button onclick="nextCard()">Next</button>
+    </div>
+    <div class="edit-area">
+      <input type="text" id="new-question" placeholder="Question"/>
+      <input type="text" id="new-answer" placeholder="Answer"/>
+      <button onclick="addCard()">Add</button>
+      <button onclick="editCard()">Edit</button>
+      <button onclick="deleteCard()">Delete</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+📁 style.css
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  text-align: center;
+  padding: 20px;
+}
+.container {
+  max-width: 400px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+.card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 10px;
+  min-height: 100px;
+}
+.hidden {
+  display: none;
+}
+.buttons button,
+.edit-area button {
+  margin: 5px;
+}
+.edit-area input {
+  width: 45%;
+  margin: 5px;
+}
+📁 script.js
+let flashcards = [
+  { question: "What is the capital of France?", answer: "Paris" },
+  { question: "2 + 2?", answer: "4" },
+];
 
-✅ TASK 1: Hangman Game
+let currentIndex = 0;
 
-Sample Output (if the word is "apple"):
+function displayCard() {
+  const card = flashcards[currentIndex];
+  document.getElementById("flashcard-question").textContent = card.question;
+  document.getElementById("flashcard-answer").textContent = card.answer;
+  document.getElementById("flashcard-answer").classList.add("hidden");
+}
 
-Welcome to Hangman!
-Word: _____
-Guess a letter: a
-Word: a____
-Guess a letter: e
-Word: a___e
-Guess a letter: p
-Word: app_e
-Guess a letter: l
-Word: apple
-Congratulations! You guessed the word.
+function showAnswer() {
+  document.getElementById("flashcard-answer").classList.remove("hidden");
+}
 
+function nextCard() {
+  currentIndex = (currentIndex + 1) % flashcards.length;
+  displayCard();
+}
 
----
+function prevCard() {
+  currentIndex = (currentIndex - 1 + flashcards.length) % flashcards.length;
+  displayCard();
+}
 
-✅ TASK 2: Stock Portfolio Tracker
+function addCard() {
+  const q = document.getElementById("new-question").value;
+  const a = document.getElementById("new-answer").value;
+  if (q && a) {
+    flashcards.push({ question: q, answer: a });
+    currentIndex = flashcards.length - 1;
+    displayCard();
+  }
+}
 
-Sample Input/Output:
+function editCard() {
+  const q = document.getElementById("new-question").value;
+  const a = document.getElementById("new-answer").value;
+  if (q && a) {
+    flashcards[currentIndex] = { question: q, answer: a };
+    displayCard();
+  }
+}
 
-Enter stock name (or 'done' to finish): AAPL
-Enter quantity for AAPL: 2
-Enter stock name (or 'done' to finish): TSLA
-Enter quantity for TSLA: 1
-Enter stock name (or 'done' to finish): done
-Total Investment Value: $ 610
+function deleteCard() {
+  if (flashcards.length > 1) {
+    flashcards.splice(currentIndex, 1);
+    currentIndex = 0;
+    displayCard();
+  }
+}
 
+displayCard();
+Output (UI Description) :
+A centered card shows the question.
 
----
+“Show Answer” reveals the answer below the question.
 
-✅ TASK 3: Move All .jpg Files
+“Previous” and “Next” buttons navigate through flashcards.
 
-Assume you have:
+Text inputs allow adding/editing/deleting cards.
+__ __
+TASK 2: Random Quote Generator
 
-Folder source/ with files: image1.jpg, image2.jpg, doc.txt
+📁 index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Random Quote Generator</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Random Quote Generator</h1>
+    <div class="quote-box">
+      <p id="quote-text">Click the button to generate a quote.</p>
+      <p id="quote-author"></p>
+    </div>
+    <button onclick="generateQuote()">New Quote</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+📁 style.css
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f5f5;
+  text-align: center;
+  padding: 30px;
+}
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.quote-box {
+  margin-bottom: 20px;
+}
+#quote-text {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+#quote-author {
+  font-style: italic;
+  color: #555;
+}
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+📁 script.js
+const quotes = [
+  { text: "Be yourself; everyone else is already taken.", author: "Oscar Wilde" },
+  { text: "The only limit to our realization of tomorrow is our doubts of today.", author: "Franklin D. Roosevelt" },
+  { text: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
+  { text: "In the middle of every difficulty lies opportunity.", author: "Albert Einstein" },
+  { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" }
+];
 
-Folder destination/ is empty
+function generateQuote() {
+  const random = Math.floor(Math.random() * quotes.length);
+  document.getElementById("quote-text").textContent = `"${quotes[random].text}"`;
+  document.getElementById("quote-author").textContent = `- ${quotes[random].author}`;
+}
+ Output Description :
 
+A clean white card displays a quote and its author.
 
-Output in terminal:
+A green “New Quote” button generates a different quote on each click.
 
-All .jpg files moved.
+Each quote appears with simple fade-in (can be enhanced with CSS transitions if desired).
 
-Effect:
+__ __
+TASK 3: Fitness Tracker App (Basic version with localStorage)
 
-image1.jpg and image2.jpg moved to destination/
+📁 index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fitness Tracker</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Fitness Tracker</h1>
+    <form id="entry-form">
+      <input type="date" id="date" required />
+      <input type="number" id="steps" placeholder="Steps" required />
+      <input type="number" id="calories" placeholder="Calories Burned" required />
+      <input type="text" id="workout" placeholder="Workout Type" required />
+      <button type="submit">Add Entry</button>
+    </form>
 
-doc.txt remains in source/
+    <h2>Daily Entries</h2>
+    <ul id="entry-list"></ul>
 
+    <h2>Weekly Summary</h2>
+    <p>Total Steps: <span id="total-steps">0</span></p>
+    <p>Total Calories: <span id="total-calories">0</span></p>
+  </div>
 
+  <script src="script.js"></script>
+</body>
+</html>
+📁 style.css
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  text-align: center;
+  padding: 20px;
+}
+.container {
+  max-width: 500px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+form input, form button {
+  width: 95%;
+  margin: 5px 0;
+  padding: 10px;
+}
+form button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  background: #eee;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+📁 script.js
+let entries = JSON.parse(localStorage.getItem("fitnessEntries")) || [];
 
----
+function renderEntries() {
+  const list = document.getElementById("entry-list");
+  list.innerHTML = "";
+  let totalSteps = 0;
+  let totalCalories = 0;
 
-✅ TASK 4: Basic Chatbot
+  entries.forEach(entry => {
+    const li = document.createElement("li");
+    li.textContent = `${entry.date}: ${entry.steps} steps, ${entry.calories} cal, ${entry.workout}`;
+    list.appendChild(li);
 
-Sample Chat:
+    totalSteps += parseInt(entry.steps);
+    totalCalories += parseInt(entry.calories);
+  });
 
-Chatbot: Hello! Ask me something.
-You: hello
-Chatbot: Hi!
-You: how are you
-Chatbot: I'm fine, thanks!
-You: bye
-Chatbot: Goodbye!
+  document.getElementById("total-steps").textContent = totalSteps;
+  document.getElementById("total-calories").textContent = totalCalories;
+}
 
+document.getElementById("entry-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const entry = {
+    date: document.getElementById("date").value,
+    steps: document.getElementById("steps").value,
+    calories: document.getElementById("calories").value,
+    workout: document.getElementById("workout").value
+  };
+  entries.push(entry);
+  localStorage.setItem("fitnessEntries", JSON.stringify(entries));
+  this.reset();
+  renderEntries();
+});
 
----
+renderEntries();
+ Output Description :
+
+A form for inputting daily fitness data (date, steps, calories, workout type).
+
+Entries are displayed below the form.
+
+A simple weekly summary shows the total steps and calories burned.
+
+Data is saved in localStorage.
+__ __
+
+TASK 4: Language Learning App 
+
+📁 index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Language Learning App</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Learn Spanish Vocabulary</h1>
+    
+    <div class="flashcard">
+      <div id="word">Click "Next Word"</div>
+      <div id="translation" class="hidden"></div>
+      <button onclick="showTranslation()">Show Translation</button>
+      <button onclick="nextWord()">Next Word</button>
+    </div>
+
+    <h2>Quiz</h2>
+    <div id="quiz-section">
+      <p id="quiz-question">Press Start Quiz</p>
+      <input type="text" id="quiz-answer" placeholder="Your Answer" />
+      <button onclick="submitQuizAnswer()">Submit</button>
+      <button onclick="startQuiz()">Start Quiz</button>
+      <p id="quiz-feedback"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+📁 style.css
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f4f8;
+  text-align: center;
+  padding: 30px;
+}
+.container {
+  max-width: 500px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+}
+.flashcard {
+  margin-bottom: 30px;
+}
+#word {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+#translation {
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: green;
+}
+.hidden {
+  display: none;
+}
+button {
+  margin: 8px;
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+input {
+  padding: 10px;
+  width: 80%;
+  margin-bottom: 10px;
+}
+#quiz-feedback {
+  margin-top: 10px;
+  font-weight: bold;
+}
+📁 script.js
+const vocabulary = [
+  { word: "Hola", translation: "Hello" },
+  { word: "Gracias", translation: "Thank you" },
+  { word: "Adiós", translation: "Goodbye" },
+  { word: "Por favor", translation: "Please" },
+  { word: "Perro", translation: "Dog" },
+  { word: "Gato", translation: "Cat" }
+];
+
+let currentIndex = -1;
+let quizIndex = -1;
+function nextWord() {
+  currentIndex = (currentIndex + 1) % vocabulary.length;
+  document.getElementById("word").textContent = vocabulary[currentIndex].word;
+  document.getElementById("translation").textContent = vocabulary[currentIndex].translation;
+  document.getElementById("translation").classList.add("hidden");
+}
+
+function showTranslation() {
+  document.getElementById("translation").classList.remove("hidden");
+}
+
+// Quiz functions
+function startQuiz() {
+  quizIndex = Math.floor(Math.random() * vocabulary.length);
+  document.getElementById("quiz-question").textContent =
+    `Translate to English: ${vocabulary[quizIndex].word}`;
+  document.getElementById("quiz-feedback").textContent = "";
+  document.getElementById("quiz-answer").value = "";
+}
+
+function submitQuizAnswer() {
+  const userAnswer = document.getElementById("quiz-answer").value.trim().toLowerCase();
+  const correct = vocabulary[quizIndex].translation.toLowerCase();
+
+  if (userAnswer === correct) {
+    document.getElementById("quiz-feedback").textContent = "✅ Correct!";
+  } else {
+    document.getElementById("quiz-feedback").textContent = `❌ Incorrect! Answer: ${correct}`;
+  }
+}
+
+Output Description :
+Flashcard section shows a Spanish word; user can reveal the English translation and click through the list.
+Quiz section picks a random word and asks for English translation input.
+Correct/Incorrect feedback is shown.
+All done with simple HTML, CSS, and JavaScript (no backend).
