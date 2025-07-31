@@ -1,0 +1,73 @@
+
+---
+
+✅ TASK 1: Hangman Game
+
+Sample Output (if the word is "apple"):
+
+Welcome to Hangman!
+Word: _____
+Guess a letter: a
+Word: a____
+Guess a letter: e
+Word: a___e
+Guess a letter: p
+Word: app_e
+Guess a letter: l
+Word: apple
+Congratulations! You guessed the word.
+
+
+---
+
+✅ TASK 2: Stock Portfolio Tracker
+
+Sample Input/Output:
+
+Enter stock name (or 'done' to finish): AAPL
+Enter quantity for AAPL: 2
+Enter stock name (or 'done' to finish): TSLA
+Enter quantity for TSLA: 1
+Enter stock name (or 'done' to finish): done
+Total Investment Value: $ 610
+
+
+---
+
+✅ TASK 3: Move All .jpg Files
+
+Assume you have:
+
+Folder source/ with files: image1.jpg, image2.jpg, doc.txt
+
+Folder destination/ is empty
+
+
+Output in terminal:
+
+All .jpg files moved.
+
+Effect:
+
+image1.jpg and image2.jpg moved to destination/
+
+doc.txt remains in source/
+
+
+
+---
+
+✅ TASK 4: Basic Chatbot
+
+Sample Chat:
+
+Chatbot: Hello! Ask me something.
+You: hello
+Chatbot: Hi!
+You: how are you
+Chatbot: I'm fine, thanks!
+You: bye
+Chatbot: Goodbye!
+
+
+---
